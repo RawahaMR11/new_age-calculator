@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Lucida Console";
+        }
+
+        body {
+            background-color: #2F5249;
+            color: #97B067;
+            width: 100%;
+            height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2em;
+            gap: 2em;
+        }
+        .main-container {
+            padding: 2em;
+            border-radius: 2em;
+            background-color: #437057;
+        }
+
+        .main-container h1 {
+            text-align: center;
+        }
+
+        .chooseType {
+            max-width: 30em;
+            width: 100%;
+            height: 21.39em;
+            margin: 2em 0 2em 0;
+            text-align: center;
+        }
+
+
+        .parentageType {
+            width: 100%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            text-align: start;
+            margin: 2em 0 1em 0;
+        }
+
+        input[type="radio"] {
+            display: inline-block;
+            clear: none;
+            width: 1.7em;
+            height: 1.7em;
+            margin: 0.5em 0;
+            vertical-align: middle;
+            appearance: none; 
+            border: 2px solid #2F5249;
+            border-radius: 50%;
+        }
+
+        input[type="radio"]:checked {
+            background-color: #102542;
+        }
+
+        label {
+            display: inline-block; 
+            clear: none;
+            margin: 0 0 0 0.5em; 
+            vertical-align: middle; 
+        }
+
+        input[type="submit"] {
+            width: 60%;
+            height: 2em;
+            padding: 0.3em;
+            font-size: 1.4em;
+            font-weight: 600;
+            border: none;
+            border-radius: 2em;
+            align-self: center;
+            background-color: #2F5249;
+            color: #97B067;
+            position: relative;
+            top: 2em;
+            transition: all .3s ease-out;
+            /* box-shadow: 1px 1px 15px #2F5249, -1px -1px 15px #2F5249; */
+        }
+
+        input[type="submit"]:hover {
+            background-color: #97B067;
+            color: #2F5249;
+            top: 1.5em;
+            cursor: pointer;
+            /* transform: scale(1.02); */
+            box-shadow: 10px -2px 20px #2F5249, -10px 10px 20px #2F5249;
+        }
+
+        input[type="date"] {
+            width: 60%;
+            height: 2em;
+            padding: 1em;
+            font-size: 1.4em;
+            font-weight: 600;
+            border: none;
+            border-radius: 2em;
+            align-self: center;
+            background-color: #2F5249;
+            cursor: pointer;
+            margin-top: 2em;
+            color: #97B067;
+            outline-color: #E3DE61;
+            outline-offset: 5px;
+        }
+
+        .error {
+            width: 100%;
+            height: 1em;
+            color: #97B067;
+            font-size: 0.9em;
+            font-weight: 500;
+            margin-top: 0.7em;
+        }
+        .ageInDate, .ageInYears, .ageInMonths, .ageInHours, .ageInMinutes, .ageInSeconds {
+            width: 20em;
+            padding: 1.5em;
+            background-color: #437057;
+            position: absolute;
+            text-align: center;
+            border-radius: 1.5em;
+            animation: slowlyAppear 2s ease;
+        }
+
+        @keyframes slowlyAppear {
+            from {
+                opacity: 0;
+                transform: translateY(0.5em)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0em)
+            }
+        }
+
+        .ageInDate {
+            top: 2em;
+            left: 1.4em;
+        }
+
+        .ageInYears {
+            top: 13.5em;
+            left: 1.4em;
+        }
+
+         .ageInMonths {
+            top: 25.1em;
+            left: 1.4em;
+        }
+
+        .ageInHours {
+            top: 2em;
+            right: 1.4em;
+        }
+
+        .ageInMinutes {
+            position: absolute;
+            top: 13.5em;
+            right: 1.4em;
+        }
+
+        .ageInSeconds {
+            top: 25.1em;
+            right: 1.4em;
+        }
+
+        .result {
+            width: 100%;
+            height: 2em;
+            padding: 0.3em;
+            font-size: 1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 2em;
+            align-self: center;
+            background: none;
+            margin-top: 1em;
+            outline-color: #2F5249;
+            text-align: center;
+            font-weight: 900;
+        }
+
+
+
+        button {
+            width: 2em;
+            height: 2em;
+            border: none;
+            background-color: #2F5249;
+            color: #97B067;
+            font-weight: 900;
+        }
+
+        @media screen and (max-width: 992px) {
+            body {
+                padding: 1em;
+            }
+            .main-container {
+                padding: 1em;
+            }
+            .parentageType {
+                justify-content: space-between;
+            }
+
+            #submitBtn, #dobInput {
+                width: 80%;
+            }
+            label {
+                margin: 0 0 0 0.3em;
+                letter-spacing: -1px;
+                word-spacing: -3px;
+                font-size: 1.1em;
+            }
+
+            .ageInDate, .ageInYears, .ageInMonths, .ageInHours, .ageInMinutes, .ageInSeconds {
+                width: 100%;
+                position: static;
+            }
+
+            .ageInDate {
+                margin-top: 8.5em;
+            }
+
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="main-container">
+            <h1>Age Calculator</h1>
+
+            <section class="chooseType">
+                <h4>Select type in which you want to calculate your age</h4>
+                <form action="#" id="ageType">
+                    <input type="date" name="ageType" id="dobInput">
+                    <div class="error" id="error"></div>
+                    <div class="parentageType">
+                        <div class="left">
+                            <input type="radio" id="dateAge"><label for="radio">Age in Date</label><br>
+                            <input type="radio" id="yearsAge"><label for="radio">Age in Years</label><br>
+                            <input type="radio" id="monthsAge"><label for="radio">Age in Months</label>
+                        </div>
+                        <div class="right">
+                            <input type="radio" id="hoursAge"><label for="radio">Age in Hours</label><br>
+                            <input type="radio" id="minutesAge"><label for="radio">Age in Minutes</label><br>
+                            <input type="radio" id="secondsAge"><label for="radio">Age in Seconds</label>
+                        </div>
+                    </div>
+                    <input type="submit" name="ageType" id="submitBtn">
+                </form>
+            </section>
+
+
+            <section class="ageInDate">
+                <h4>Your Age in Date</h4>
+                <div id="ageInDate" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+             <section class="ageInYears">
+                <h4>Your Age in Years</h4>
+                <div id="ageInYears" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+             <section class="ageInMonths">
+                <h4>Your Age in months</h4>
+                <div id="ageInMonths" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+             <section class="ageInHours">
+                <h4>Your Age in Hours</h4>
+                <div id="ageInHours" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+
+            <section class="ageInMinutes">
+                <h4>Your Age in Minutes</h4>
+                <div id="ageInMinutes" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+            <section class="ageInSeconds">
+                <h4>Your Age in Seconds</h4>
+                <div id="ageInSeconds" class="result"></div>
+                <button id="copyDate">📋</button>
+            </section>
+
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+    <script>
+
+        // BUTTONS
+        const error = document.querySelector('.error');
+        const inputDOB = document.getElementById('dobInput');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        // DIV IN WHICH THE OUTPUT SHOWS
+        const generatedAgeInDate = document.getElementById('ageInDate')
+        const generatedAgeInYears = document.getElementById('ageInYears')
+        const generatedAgeInMonths = document.getElementById('ageInMonths')
+        const generatedAgeInHours = document.getElementById('ageInHours')
+        const generatedAgeInMinutes = document.getElementById('ageInMinutes')
+        const generatedAgeInSeconds = document.getElementById('ageInSeconds')
+
+        // RADIO BUTTONS
+        const fullDate = document.getElementById('dateAge')
+        const yearsAge = document.getElementById('yearsAge')
+        const monthsAge = document.getElementById('monthsAge')
+        const hoursAge = document.getElementById('hoursAge')
+        const minutesAge = document.getElementById('minutesAge')
+        const secondsAge = document.getElementById('secondsAge')
+
+
+
+
+        submitBtn.addEventListener("click", (e) => {
+
+            e.preventDefault();
+
+            error.textContent = ''; 
+        
+
+            if (!inputDOB.value) {
+                error.textContent = 'Please enter your date of birth';
+                return;
+            }
+
+            let dateOfBirth = new Date(inputDOB.value)
+            let today = new Date();
+            
+            if (dateOfBirth > today) {
+                error.textContent = 'Birth date cannot be in the future';
+                return;
+            }
+
+            let years = today.getFullYear() - dateOfBirth.getFullYear();
+            let months = today.getMonth() - dateOfBirth.getMonth();
+            let days = today.getDate() - dateOfBirth.getDate();
+
+
+            if (days < 0) {
+                months--;
+                const lastDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 0).getDate();
+                days += lastDayOfMonth;
+            }
+            if (months < 0) {
+                years--;
+                months += 12;
+            }
+            
+
+            let millisecDifference = today - dateOfBirth;
+
+            const totalAgeInMonths = years * 12 + months;
+            const totalAgeInHours = Math.floor(millisecDifference / (1000 * 60 * 60));
+            const totalAgeInMinutes = Math.floor(millisecDifference / (1000 * 60));
+            const totalAgeInSeconds = Math.floor(millisecDifference / 1000);
+            
+
+
+            
+            if(fullDate.checked) {
+                generatedAgeInDate.textContent = `${years} years, ${months} Months, ${days} Days`;
+            }
+            if(yearsAge.checked) {
+                generatedAgeInYears.textContent =  years;
+            }
+            if(monthsAge.checked) {
+                generatedAgeInMonths.textContent = totalAgeInMonths;
+            }
+            if(hoursAge.checked) {
+                generatedAgeInHours.textContent = totalAgeInHours.toLocaleString();
+            }
+            if(minutesAge.checked) {
+                generatedAgeInMinutes.textContent = totalAgeInMinutes.toLocaleString();
+            }
+            if(secondsAge.checked) {
+                generatedAgeInSeconds.textContent = totalAgeInSeconds.toLocaleString();
+            }
+
+            if(!fullDate.checked || !yearsAge.checked || !monthsAge.checked || !hoursAge.checked || !minutesAge.checked || !secondsAge.checked) {
+                error.textContent = "You Must Select at least one Age Type"
+            }
+        
+        })
+
+
+
+        // Add copy functionality to all copy buttons its from chat gpt sir but i have little edited sorry sir 
+        const copyButtons = document.querySelectorAll('button[id="copyDate"]');
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const resultDiv = button.previousElementSibling;
+                if (resultDiv.textContent) {
+                    navigator.clipboard.writeText(resultDiv.textContent)
+                        .then(() => {
+                            button.textContent = '✓';
+                            setTimeout(() => {
+                                button.textContent = '📋';
+                            }, 1000);
+                        })
+                        .catch(err => {
+                            console.error('Failed to copy: ', err);
+                        });
+                }
+            });
+        });
+
+</script>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
